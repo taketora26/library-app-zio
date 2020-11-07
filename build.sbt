@@ -1,15 +1,16 @@
 name := "library-app-zio"
- 
-version := "1.0" 
-      
+version := "1.0"
+
 lazy val `library-app-zio` = (project in file(".")).enablePlugins(PlayScala)
 
-resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
-      
-resolvers += "Akka Snapshot Repository" at "https://repo.akka.io/snapshots/"
-      
 scalaVersion := "2.13.1"
 
-libraryDependencies ++= Seq( jdbc , ehcache , ws , specs2 % Test , guice )
+libraryDependencies ++= Seq(
+  "org.iq80.leveldb"       % "leveldb"             % "0.12",
+  "org.typelevel"          %% "cats-effect"        % "2.1.3",
+  "dev.zio"                %% "zio"                % "1.0.0-RC21",
+  "dev.zio"                %% "zio-interop-cats"   % "2.1.3.0-RC16",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
+)
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full)
