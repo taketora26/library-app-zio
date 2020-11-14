@@ -6,7 +6,7 @@ import domain.book.{MyBook, MyBookRepository}
 import interfaces.rest.controllers.dtos.MyBookDto
 import launcher.Logger.AppLogger
 import launcher.components.AppContext
-import play.api.libs.json.{JsError, JsResult, Json}
+import play.api.libs.json.{JsError, JsResult, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import zio.{Task, ZIO}
 
@@ -20,7 +20,7 @@ class MyBookController(val controllerComponents: ControllerComponents)(implicit 
     } yield Ok(Json.toJson(myBooks))
   }
 
-  def getById(id: String) = Action.asyncZio[AppContext] { req =>
+  def getById(id: String): Action[AnyContent] = Action.asyncZio[AppContext] { req =>
     for {
       _           <- AppLogger.debug(s"Looking for user $id")
       mayBeMyBook <- MyBookRepository.getById(id).mapError(_ => InternalServerError)
@@ -28,7 +28,7 @@ class MyBookController(val controllerComponents: ControllerComponents)(implicit 
     } yield Ok(Json.toJson(myBook))
   }
 
-  def create() = Action.asyncZio[AppContext](parse.json) { req =>
+  def create(): Action[JsValue] = Action.asyncZio[AppContext](parse.json) { req =>
     val myBookParsed: JsResult[MyBookDto] = req.body.validate[MyBookDto]
     for {
       _      <- AppLogger.debug(s"Creating myBook")
@@ -38,7 +38,7 @@ class MyBookController(val controllerComponents: ControllerComponents)(implicit 
     } yield Ok(Json.toJson(myBook))
   }
 
-  def update(id: String) = Action.asyncZio[AppContext](parse.json) { req =>
+  def update(id: String): Action[JsValue] = Action.asyncZio[AppContext](parse.json) { req =>
     val myBookParsed: JsResult[MyBook] = req.body.validate[MyBook]
     for {
       _           <- AppLogger.debug(s"Updating myBook $id")
