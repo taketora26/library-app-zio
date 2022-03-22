@@ -1,8 +1,5 @@
 package launcher
 
-import _root_.controllers.AssetsComponents
-import interfaces.rest.controllers.MyBookController
-import interfaces.web.controllers.HomeController
 import launcher.components._
 import play.api.ApplicationLoader.Context
 import play.api.routing.Router
@@ -17,7 +14,6 @@ class LibraryApplicationLoader extends ApplicationLoader {
 class LibraryComponents(context: Context)
     extends BuiltInComponentsFromContext(context)
     with ControllerComponent
-    with AssetsComponents
     with play.filters.HttpFiltersComponents {
 
   LoggerConfigurator(context.environment.classLoader).foreach {
@@ -35,7 +31,7 @@ class LibraryComponents(context: Context)
 
   lazy val router: Router = {
     lazy val prefix = "/"
-    new Routes(httpErrorHandler, homeController, myBookController, assets, prefix)
+    new Routes(httpErrorHandler, myBookController, prefix)
   }
 
 }

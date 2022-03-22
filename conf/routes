@@ -1,9 +1,6 @@
-GET     /                           interfaces.web.controllers.HomeController.index
 GET     /mybooks                    interfaces.rest.controllers.MyBookController.list()
 POST    /mybooks                    interfaces.rest.controllers.MyBookController.create()
 GET     /mybooks/:id                interfaces.rest.controllers.MyBookController.getById(id)
 PUT     /mybooks/:id                interfaces.rest.controllers.MyBookController.update(id)
-
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
       

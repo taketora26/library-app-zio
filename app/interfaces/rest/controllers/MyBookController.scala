@@ -1,7 +1,6 @@
 package interfaces.rest.controllers
 
 import java.util.UUID
-
 import domain.book.{MyBook, MyBookRepository}
 import interfaces.rest.controllers.dtos.MyBookDto
 import launcher.Logger.AppLogger
@@ -22,7 +21,7 @@ class MyBookController(val controllerComponents: ControllerComponents)(implicit 
 
   def getById(id: String): Action[AnyContent] = Action.asyncZio[AppContext] { req =>
     for {
-      _           <- AppLogger.debug(s"Looking for user $id")
+      _           <- AppLogger.debug(s"Looking for myBook $id")
       mayBeMyBook <- MyBookRepository.getById(id).mapError(_ => InternalServerError)
       myBook      <- ZIO.fromOption(mayBeMyBook).mapError(_ => NotFound(Json.obj("message" -> s"No myBook for $id")))
     } yield Ok(Json.toJson(myBook))

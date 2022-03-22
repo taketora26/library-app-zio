@@ -7,6 +7,7 @@ import scala.concurrent.Future
 
 package object controllers {
 
+  //  Zlayerは環境Rを作るためのレシピを表すデータ型
   type HttpContext[A] = ZLayer[ZEnv, Throwable, A]
 
   implicit class AsyncBuilderOps[+R[_], B](ab: ActionBuilder[R, B]) {
