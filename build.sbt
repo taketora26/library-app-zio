@@ -3,7 +3,7 @@ version := "1.0"
 
 lazy val `library-app-zio` = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.13.1"
+scalaVersion := "2.13.4"
 
 libraryDependencies ++= Seq(
   "org.iq80.leveldb"       % "leveldb"             % "0.12",
@@ -13,4 +13,4 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 )
 
-addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full)
+addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full)
